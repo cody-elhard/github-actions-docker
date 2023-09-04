@@ -11,12 +11,10 @@ jobs:
   test:
     environment: testing
     runs-on: ubuntu-latest
-    container:
-      image: node:16
     env:
       MONGODB_USERNAME: root
       MONGODB_PASSWORD: example
-      MONGO_CLUSTER_ADDRESS: mongodb # Points to the service name
+      MONGO_CLUSTER_ADDRESS: 127.0.0.1:27017
       MONGO_CONNECTION_PROTOCOL: mongodb
       PORT: 8080
     services:
@@ -25,6 +23,8 @@ jobs:
         env:
           MONGO_INITDB_ROOT_USERNAME: ${{ env.MONGODB_USERNAME }}
           MONGO_INITDB_ROOT_PASSWORD: ${{ env.MONGODB_PASSWORD }}
+        ports:
+          - 27017:27017
 
     steps:
       - name: Get Code
